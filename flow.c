@@ -34,6 +34,7 @@ port_flow_complain(struct rte_flow_error *error)
 	return -err;
 }
 
+
 static uint16_t
 next_queue_id(uint16_t start, uint16_t isolated_queue, uint16_t nr_queues)
 {

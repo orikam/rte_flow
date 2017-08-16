@@ -30,6 +30,7 @@ struct rte_mempool *mbuf_pool;
 
 #include "mbuf_parser.c"
 #include "flow.c"
+#include "flow_blocks.c"
 
 static void
 main_loop(void)
@@ -104,8 +105,8 @@ init_port(void)
 	if (!getenv("WITHOUT_FLOW")) {
 		uint32_t intf_ip[3] = {
 			0xc0a80101, /* 192.168.1.1 */
-			//0xc0a80102, /* 192.168.1.2 */
-			//0xc0a80103, /* 192.168.1.3 */
+//			0xc0a80102, /* 192.168.1.2 */
+//			0xc0a80103, /* 192.168.1.3 */
 		};
 
 		if (flows_setup_from_tencent(port_id, intf_ip, 1, 1) < 0)
@@ -113,6 +114,13 @@ init_port(void)
 		else
 			printf(":: flow setup is done\n");
 	}
+	else {
+		printf("in test flow\n");
+		generate_ipv4_rule(port_id, 1,
+				0xc0a80101, 0xffffffff,
+				0xc0a80101, 0xffffffff);
+	}
+
 
 	rte_eth_promiscuous_enable(port_id);
 
